@@ -73,8 +73,6 @@ export default function App() {
 
         <span>Projeto demonstrativo · Pagamento fictício</span>
 
-        <a href="/creditos.txt" target="_blank" rel="noreferrer">Créditos das imagens</a>
-
         <span>© {new Date().getFullYear()} Lumos</span>
 
       </footer>
