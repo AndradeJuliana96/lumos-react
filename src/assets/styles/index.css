@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+  background: #f8faf6;
+  color: #1e4425;
+}
+
+button, input {
+  font: inherit;
+}
