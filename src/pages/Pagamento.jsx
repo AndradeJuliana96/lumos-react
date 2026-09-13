@@ -112,10 +112,20 @@ export default function Pagamento({ produtos }) {
               <Campo
                 label="Número do cartão"
                 nome="numero"
-                registro={register('numero')}
+                registro={register('numero', {
+                  onChange: (event) => {
+                    const numeros = event.target.value
+                      .replace(/\D/g, '')
+                      .slice(0, 16);
+
+                    event.target.value = numeros
+                      .replace(/(\d{4})(?=\d)/g, '$1 ');
+                  }
+                })}
                 erro={errors.numero}
                 placeholder="1234 5678 9012 3456"
                 inputMode="numeric"
+                maxLength={19}
                 autoComplete="off"
                 ajuda="16 dígitos. Espaços e hífens são aceitos."
               />
