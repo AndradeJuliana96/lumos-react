@@ -1095,3 +1095,41 @@ body { overflow-x: hidden; }
 .estado-catalogo .detalhe-botao {
   margin: 20px auto 0;
 }
+
+/* RF06 — Seletor de quantidade */
+
+.seletor-quantidade {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 94px;
+}
+
+.seletor-quantidade button {
+  width: 25px;
+  height: 25px;
+  border: 1px solid var(--linha);
+  border-radius: 50%;
+  color: var(--verde);
+  background: white;
+  line-height: 1;
+}
+
+.seletor-quantidade button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.seletor-quantidade strong {
+  min-width: 20px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+/* RF06 — Alinhamento do seletor nos cards */
+
+.produto-acoes .botao-card {
+  flex: 1;
+  margin-top: 0;
+}

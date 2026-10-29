@@ -1,69 +1,82 @@
-import { useEffect, useRef } from 'react';
-import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { produtos } from './data/produtos.js';
-import Carrinho from './pages/Carrinho.jsx';
-import Catalogo from './pages/Catalogo.jsx';
-import Pagamento from './pages/Pagamento.jsx';
-import Sucesso from './pages/Sucesso.jsx';
-import Falha from './pages/Falha.jsx';
-import Resultado from './pages/Resultado.jsx';
-import Icone from './components/Icone.jsx';
+import { useEffect, useRef } from "react";
+import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { produtos } from "./data/produtos.js";
+import Carrinho from "./pages/Carrinho.jsx";
+import Catalogo from "./pages/Catalogo.jsx";
+import Pagamento from "./pages/Pagamento.jsx";
+import Sucesso from "./pages/Sucesso.jsx";
+import Falha from "./pages/Falha.jsx";
+import Resultado from "./pages/Resultado.jsx";
+import Icone from "./components/Icone.jsx";
 import DetalheProduto from "./pages/DetalheProduto.jsx";
+import { useCarrinho } from "./context/CarrinhoContext.jsx";
 export default function App() {
-  const {
-    pathname
-  } = useLocation();
+  const { quantidadeTotal, itens } = useCarrinho();
+  const { pathname } = useLocation();
   const mainRef = useRef(null);
   useEffect(() => {
     const titulos = {
-  '/': 'Seu carrinho',
-  '/produtos': 'Produtos',
-  '/pagamento': 'Pagamento',
-  '/sucesso': 'Compra aprovada',
-  '/falha': 'Compra não aprovada',
-};
-    document.title = `Lumos | ${titulos[pathname] || 'Resultado da compra'}`;
+      "/": "Seu carrinho",
+      "/produtos": "Produtos",
+      "/pagamento": "Pagamento",
+      "/sucesso": "Compra aprovada",
+      "/falha": "Compra não aprovada",
+    };
+    document.title = `Lumos | ${titulos[pathname] || "Resultado da compra"}`;
     mainRef.current?.focus();
     window.scrollTo(0, 0);
   }, [pathname]);
-  return <>
+  return (
+    <>
+      <a className="pular" href="#conteudo">
+        Pular para o conteúdo
+      </a>
 
-      <a className="pular" href="#conteudo">Pular para o conteúdo</a>
-
-      <div className="faixa">Luz, forma e aconchego. <span>Encontre o seu equilíbrio.</span></div>
+      <div className="faixa">
+        Luz, forma e aconchego. <span>Encontre o seu equilíbrio.</span>
+      </div>
 
       <header className="cabecalho">
-
         <Link className="marca" to="/" aria-label="Lumos — voltar ao carrinho">
-
-          <img src="/images/logo.png" alt="Lumos Luminárias & Iluminação" width="200" height="110" />
-
+          <img
+            src="/images/logo.png"
+            alt="Lumos Luminárias & Iluminação"
+            width="200"
+            height="110"
+          />
         </Link>
 
         <div className="cabecalho-descricao">LUMINÁRIAS & ILUMINAÇÃO</div>
         <Link className="link-catalogo" to="/produtos">
-  Ver produtos
-</Link>
-
-        <Link className="sacola" to="/" aria-label="Carrinho com quatro unidades">
-
-          <Icone nome="sacola" /><span>Seu carrinho</span><b>4</b>
-
+          Ver produtos
         </Link>
 
+        <Link
+          className="sacola"
+          to="/"
+          aria-label={`Carrinho com ${quantidadeTotal} ${
+            quantidadeTotal === 1 ? "unidade" : "unidades"
+          }`}
+        >
+          <Icone nome="sacola" />
+          <span>Seu carrinho</span>
+          <b>{quantidadeTotal}</b>
+        </Link>
       </header>
 
       <main id="conteudo" tabIndex={-1} ref={mainRef}>
-
         <Routes>
-
           <Route path="/" element={<Carrinho produtos={produtos} />} />
           <Route path="/produtos" element={<Catalogo />} />
-          
+
           <Route path="/produtos/:id" element={<DetalheProduto />} />
 
-          <Route path="/pagamento" element={<Pagamento produtos={produtos} />} />
-
+          <Route
+            path="/pagamento"
+            element={
+              itens.length > 0 ? <Pagamento /> : <Navigate to="/" replace />
+            }
+          />
           <Route path="/sucesso" element={<Sucesso />} />
 
           <Route path="/falha" element={<Falha />} />
@@ -71,20 +84,19 @@ export default function App() {
           <Route path="/resultado/:status" element={<Resultado />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
-
         </Routes>
-
       </main>
 
       <footer>
-
-        <p><strong>Lumos</strong><span>Iluminar é transformar.</span></p>
+        <p>
+          <strong>Lumos</strong>
+          <span>Iluminar é transformar.</span>
+        </p>
 
         <span>Projeto demonstrativo · Pagamento fictício</span>
 
         <span>© {new Date().getFullYear()} Lumos</span>
-
       </footer>
-
-    </>;
+    </>
+  );
 }

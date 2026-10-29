@@ -1,14 +1,25 @@
 
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { useCarrinho } from "../context/CarrinhoContext.jsx";
+import { estoqueDisponivel } from "../utils/carrinho.js";
+import { emCentavos, formatarMoeda } from "../utils/moeda.js";
+import SeletorQuantidade from "./SeletorQuantidade.jsx";
 
 export default function ProdutoCard({ produto }) {
-  const precoFormatado = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(produto.preco);
+  const { adicionarItem, itens } = useCarrinho();
+  const [quantidade, setQuantidade] = useState(1);
 
-  const esgotado = produto.estoque === 0;
+  const noCarrinho =
+    itens.find((item) => item.id === produto.id)?.quantidade ?? 0;
+
+  const restante = estoqueDisponivel(produto, noCarrinho);
+  const estoqueInvalido = restante === null;
+  const disponivel = restante ?? 0;
+  const esgotado = restante === 0 && noCarrinho === 0;
+  const limiteAtingido = restante === 0 && !esgotado;
+  const bloqueado = estoqueInvalido || esgotado || limiteAtingido;
 
   return (
     <article className="produto-card">
@@ -34,22 +45,38 @@ export default function ProdutoCard({ produto }) {
 
         <p>{produto.descricao}</p>
 
-        <strong>{precoFormatado}</strong>
+        <strong>
+          {formatarMoeda(emCentavos(produto.preco))}
+        </strong>
 
         <span className="estoque">
-          {esgotado
-            ? 'Produto esgotado'
-            : `${produto.estoque} disponíveis`}
+          {estoqueInvalido
+            ? "Estoque indisponível"
+            : esgotado
+              ? "Produto esgotado"
+              : `${disponivel} disponíveis`}
         </span>
 
         <div className="produto-acoes">
+          <SeletorQuantidade
+            maximo={disponivel}
+            onChange={setQuantidade}
+            disabled={bloqueado}
+          />
+
           <button
             className="botao botao-card"
             type="button"
-            disabled
-            title="Disponível na próxima etapa"
+            disabled={bloqueado}
+            onClick={() => adicionarItem(produto, quantidade)}
           >
-            Adicionar ao carrinho
+            {estoqueInvalido
+              ? "Estoque indisponível"
+              : esgotado
+                ? "Sem estoque"
+                : limiteAtingido
+                  ? "Limite no carrinho"
+                  : "Adicionar ao carrinho"}
           </button>
         </div>
 
