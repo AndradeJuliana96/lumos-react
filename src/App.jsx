@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { produtos } from './data/produtos.js';
 import Carrinho from './pages/Carrinho.jsx';
+import Catalogo from './pages/Catalogo.jsx';
 import Pagamento from './pages/Pagamento.jsx';
 import Sucesso from './pages/Sucesso.jsx';
 import Falha from './pages/Falha.jsx';
@@ -14,11 +15,12 @@ export default function App() {
   const mainRef = useRef(null);
   useEffect(() => {
     const titulos = {
-      '/': 'Seu carrinho',
-      '/pagamento': 'Pagamento',
-      '/sucesso': 'Compra aprovada',
-      '/falha': 'Compra não aprovada'
-    };
+  '/': 'Seu carrinho',
+  '/produtos': 'Produtos',
+  '/pagamento': 'Pagamento',
+  '/sucesso': 'Compra aprovada',
+  '/falha': 'Compra não aprovada',
+};
     document.title = `Lumos | ${titulos[pathname] || 'Resultado da compra'}`;
     mainRef.current?.focus();
     window.scrollTo(0, 0);
@@ -38,6 +40,9 @@ export default function App() {
         </Link>
 
         <div className="cabecalho-descricao">LUMINÁRIAS & ILUMINAÇÃO</div>
+        <Link className="link-catalogo" to="/produtos">
+  Ver produtos
+</Link>
 
         <Link className="sacola" to="/" aria-label="Carrinho com quatro unidades">
 
@@ -52,6 +57,7 @@ export default function App() {
         <Routes>
 
           <Route path="/" element={<Carrinho produtos={produtos} />} />
+          <Route path="/produtos" element={<Catalogo />} />
 
           <Route path="/pagamento" element={<Pagamento produtos={produtos} />} />
 
