@@ -1020,3 +1020,78 @@ body { overflow-x: hidden; }
   .grade-cards { grid-template-columns: 1fr; }
   .produto-card p { min-height: auto; }
 }
+
+/* RF05 — Página de detalhes do produto */
+
+.detalhe-produto {
+  padding-top: 5px;
+}
+
+.detalhe-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
+  gap: 70px;
+  align-items: center;
+  margin-top: 22px;
+}
+
+.detalhe-imagem {
+  background: #e5ebdf;
+  aspect-ratio: 1 / 0.9;
+  overflow: hidden;
+}
+
+.detalhe-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detalhe-info p {
+  color: var(--texto);
+  margin: 20px 0 26px;
+  max-width: 430px;
+}
+
+.detalhe-preco {
+  display: block;
+  font-family: Manrope, sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 28px;
+}
+
+.detalhe-estoque {
+  margin: -12px 0 22px;
+  font-size: 0.875rem;
+}
+
+.detalhe-botao {
+  max-width: 280px;
+}
+
+.detalhe-acoes {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* Responsividade */
+
+@media (max-width: 780px) {
+  .detalhe-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .detalhe-info {
+    padding-bottom: 12px;
+  }
+}
+
+/* RF05 — Centralizar botão de produto não encontrado */
+
+.estado-catalogo .detalhe-botao {
+  margin: 20px auto 0;
+}
