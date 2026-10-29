@@ -8,6 +8,7 @@ import Sucesso from './pages/Sucesso.jsx';
 import Falha from './pages/Falha.jsx';
 import Resultado from './pages/Resultado.jsx';
 import Icone from './components/Icone.jsx';
+import DetalheProduto from "./pages/DetalheProduto.jsx";
 export default function App() {
   const {
     pathname
@@ -58,6 +59,8 @@ export default function App() {
 
           <Route path="/" element={<Carrinho produtos={produtos} />} />
           <Route path="/produtos" element={<Catalogo />} />
+          
+          <Route path="/produtos/:id" element={<DetalheProduto />} />
 
           <Route path="/pagamento" element={<Pagamento produtos={produtos} />} />
 
