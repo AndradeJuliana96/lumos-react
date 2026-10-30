@@ -1465,3 +1465,51 @@ body { overflow-x: hidden; }
     gap: 24px;
   }
 }
+
+
+/* ==========================================
+   LUMOS — LOGO SUSPENSA EM DESTAQUE
+   ========================================== */
+
+@media (min-width: 901px) {
+  .cabecalho {
+    position: relative;
+    overflow: visible;
+    z-index: 20;
+  }
+
+  .cabecalho .marca {
+    position: relative;
+    z-index: 25;
+    display: flex;
+    align-items: center;
+    overflow: visible;
+  }
+
+  .cabecalho .marca img {
+    display: block;
+    width: 245px;
+    max-width: none;
+    height: auto;
+
+    transform: translateY(27px);
+    transform-origin: center;
+
+    transition: transform 0.3s ease;
+  }
+
+  .cabecalho .marca:hover img {
+    transform: translateY(23px) scale(1.025);
+  }
+}
+
+/* Ajuste para telas menores */
+
+@media (max-width: 900px) {
+  .cabecalho .marca img {
+    width: 150px;
+    max-width: 100%;
+    height: auto;
+    transform: none;
+  }
+}
