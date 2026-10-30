@@ -1,9 +1,12 @@
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Icone from "./Icone.jsx";
 import Etapas from "./Etapas.jsx";
 
 export default function ResultadoCompra({ sucesso }) {
+  const location = useLocation();
+  const pedidoId = sucesso ? location.state?.pedidoId : null;
+
   return (
     <>
       <Etapas atual={2} />
@@ -38,18 +41,49 @@ export default function ResultadoCompra({ sucesso }) {
             : "O cartão informado possui todos os dígitos iguais. Volte ao pagamento e tente com outro número fictício."}
         </p>
 
-        <Link
-          className="botao"
-          to={sucesso ? "/" : "/pagamento"}
-        >
-          {sucesso ? "Voltar ao início" : "Tentar novamente"}
-          <Icone nome="seta" />
-        </Link>
+        {sucesso && pedidoId && (
+          <div className="pedido-confirmacao">
+            <span className="eyebrow">Número do pedido</span>
 
-        {!sucesso && (
-          <Link className="link-secundario" to="/carrinho">
-            Voltar ao carrinho
-          </Link>
+            <strong className="pedido-confirmacao-id">
+              {pedidoId}
+            </strong>
+
+            <p>
+              Guarde este número para consultar sua compra
+              simulada neste navegador.
+            </p>
+          </div>
+        )}
+
+        {sucesso ? (
+          <>
+            {pedidoId && (
+              <Link
+                className="botao"
+                to="/pedidos"
+                state={{ pedidoId }}
+              >
+                Acompanhar pedido
+                <Icone nome="seta" />
+              </Link>
+            )}
+
+            <Link className="link-secundario" to="/">
+              Voltar ao início
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link className="botao" to="/pagamento">
+              Tentar novamente
+              <Icone nome="seta" />
+            </Link>
+
+            <Link className="link-secundario" to="/carrinho">
+              Voltar ao carrinho
+            </Link>
+          </>
         )}
 
         <small>

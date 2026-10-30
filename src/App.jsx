@@ -10,7 +10,7 @@ import Pagamento from "./pages/Pagamento.jsx";
 import Sucesso from "./pages/Sucesso.jsx";
 import Falha from "./pages/Falha.jsx";
 import Resultado from "./pages/Resultado.jsx";
-
+import Pedidos from "./pages/Pedidos.jsx";
 import Icone from "./components/Icone.jsx";
 import { useCarrinho } from "./context/CarrinhoContext.jsx";
 
@@ -39,6 +39,7 @@ export default function App() {
       "/pagamento": "Pagamento",
       "/sucesso": "Compra aprovada",
       "/falha": "Compra não aprovada",
+      "/pedidos": "Acompanhar pedidos",
     };
 
     document.title = `Lumos | ${
@@ -76,6 +77,7 @@ export default function App() {
           <Link to="/">Início</Link>
           <Link to="/produtos">Produtos</Link>
           <Link to="/sobre">Sobre</Link>
+          <Link to="/pedidos">Pedidos</Link>
         </nav>
 
         <Link
@@ -110,6 +112,8 @@ export default function App() {
           <Route path="/falha" element={<Falha />} />
 
           <Route path="/resultado/:status" element={<Resultado />} />
+
+          <Route path="/pedidos" element={<Pedidos />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
