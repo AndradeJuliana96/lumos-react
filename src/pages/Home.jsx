@@ -46,9 +46,9 @@ export default function Home() {
           sua casa mais sua. Explore ideias para iluminar cada canto com
           intenção.
         </p>
-        <Link className="link-detalhes" to="/produtos">
-  Explore nossa coleção <span aria-hidden="true">→</span>
-</Link>
+        <Link className="link-detalhes" to="/sobre">
+          Conheça nossa proposta <span aria-hidden="true">→</span>
+        </Link>
       </section>
       <section className="home-destaques">
         <div className="grade-cabecalho">
