@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { pagamentoSchema } from "../utils/pagamento.js";
 import { totalCompra, formatarMoeda } from "../utils/moeda.js";
+import { criarPedido, salvarPedido } from "../utils/pedidos.js";
 import { useCarrinho } from "../context/CarrinhoContext.jsx";
 import usePagamento from "../hooks/usePagamento.js";
 
@@ -47,16 +48,31 @@ export default function Pagamento() {
 
       if (!resultado) return;
 
-      reset();
-
       if (resultado === "sucesso") {
+        // Registra a compra aprovada antes de limpar o carrinho.
+        const pedido = criarPedido({
+          itens,
+          valor: totalCompra(itens),
+        });
+
+        salvarPedido(pedido);
+
+        reset();
+
+        // Preserva o redirecionamento que já corrigimos.
         navigate("/sucesso", {
           replace: true,
           flushSync: true,
+          state: {
+            pedidoId: pedido.id,
+          },
         });
 
         limparCarrinho();
       } else {
+        reset();
+
+        // Pagamentos recusados não geram pedidos.
         navigate("/falha", {
           replace: true,
         });
