@@ -1,31 +1,62 @@
+
 import { useEffect, useRef } from "react";
-import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { produtos } from "./data/produtos.js";
+import {
+  Link,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+
+import Home from "./pages/Home.jsx";
 import Carrinho from "./pages/Carrinho.jsx";
 import Catalogo from "./pages/Catalogo.jsx";
+import DetalheProduto from "./pages/DetalheProduto.jsx";
 import Pagamento from "./pages/Pagamento.jsx";
 import Sucesso from "./pages/Sucesso.jsx";
 import Falha from "./pages/Falha.jsx";
 import Resultado from "./pages/Resultado.jsx";
+
 import Icone from "./components/Icone.jsx";
-import DetalheProduto from "./pages/DetalheProduto.jsx";
 import { useCarrinho } from "./context/CarrinhoContext.jsx";
+
+function PagamentoProtegido() {
+  const { itens } = useCarrinho();
+  const autorizado = useRef(itens.length > 0);
+
+  if (!autorizado.current) {
+    return <Navigate to="/carrinho" replace />;
+  }
+
+  return <Pagamento />;
+}
+
 export default function App() {
-  const { quantidadeTotal, itens } = useCarrinho();
+  const { quantidadeTotal } = useCarrinho();
   const { pathname } = useLocation();
   const mainRef = useRef(null);
+
   useEffect(() => {
     const titulos = {
-      "/": "Seu carrinho",
+      "/": "Início",
       "/produtos": "Produtos",
+      "/carrinho": "Seu carrinho",
       "/pagamento": "Pagamento",
       "/sucesso": "Compra aprovada",
       "/falha": "Compra não aprovada",
     };
-    document.title = `Lumos | ${titulos[pathname] || "Resultado da compra"}`;
+
+    document.title = `Lumos | ${
+      titulos[pathname] ||
+      (pathname.startsWith("/produtos/")
+        ? "Detalhes do produto"
+        : "Página")
+    }`;
+
     mainRef.current?.focus();
     window.scrollTo(0, 0);
   }, [pathname]);
+
   return (
     <>
       <a className="pular" href="#conteudo">
@@ -33,11 +64,16 @@ export default function App() {
       </a>
 
       <div className="faixa">
-        Luz, forma e aconchego. <span>Encontre o seu equilíbrio.</span>
+        Luz, forma e aconchego.{" "}
+        <span>Encontre o seu equilíbrio.</span>
       </div>
 
       <header className="cabecalho">
-        <Link className="marca" to="/" aria-label="Lumos — voltar ao carrinho">
+        <Link
+          className="marca"
+          to="/"
+          aria-label="Lumos — voltar ao início"
+        >
           <img
             src="/images/logo.png"
             alt="Lumos Luminárias & Iluminação"
@@ -46,14 +82,18 @@ export default function App() {
           />
         </Link>
 
-        <div className="cabecalho-descricao">LUMINÁRIAS & ILUMINAÇÃO</div>
-        <Link className="link-catalogo" to="/produtos">
-          Ver produtos
-        </Link>
+        <div className="cabecalho-descricao">
+          LUMINÁRIAS & ILUMINAÇÃO
+        </div>
+
+        <nav className="navegacao" aria-label="Navegação principal">
+          <Link to="/">Início</Link>
+          <Link to="/produtos">Produtos</Link>
+        </nav>
 
         <Link
           className="sacola"
-          to="/"
+          to="/carrinho"
           aria-label={`Carrinho com ${quantidadeTotal} ${
             quantidadeTotal === 1 ? "unidade" : "unidades"
           }`}
@@ -66,24 +106,35 @@ export default function App() {
 
       <main id="conteudo" tabIndex={-1} ref={mainRef}>
         <Routes>
-          <Route path="/" element={<Carrinho produtos={produtos} />} />
+          <Route path="/" element={<Home />} />
+
           <Route path="/produtos" element={<Catalogo />} />
 
-          <Route path="/produtos/:id" element={<DetalheProduto />} />
+          <Route
+            path="/produtos/:id"
+            element={<DetalheProduto />}
+          />
+
+          <Route path="/carrinho" element={<Carrinho />} />
 
           <Route
             path="/pagamento"
-            element={
-              itens.length > 0 ? <Pagamento /> : <Navigate to="/" replace />
-            }
+            element={<PagamentoProtegido />}
           />
+
           <Route path="/sucesso" element={<Sucesso />} />
 
           <Route path="/falha" element={<Falha />} />
 
-          <Route path="/resultado/:status" element={<Resultado />} />
+          <Route
+            path="/resultado/:status"
+            element={<Resultado />}
+          />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route
+            path="*"
+            element={<Navigate to="/" replace />}
+          />
         </Routes>
       </main>
 
