@@ -9,7 +9,7 @@ A aplicação apresenta um carrinho fixo com três produtos, permite o preenchim
 - Estudante: Juliana Andrade
 - Repositório: https://github.com/AndradeJuliana96/lumos-react
 - Trello público: https://trello.com/b/owk3Y8DA/lumos-react
-- Vídeo de apresentação: será adicionado após a gravação
+- Vídeo de apresentação: (https://drive.google.com/file/d/1yFdrhSHZCKqNxN2B87iIQaclyPlYbOdQ/view?usp=drive_link)
 
 ## Tecnologias utilizadas
 

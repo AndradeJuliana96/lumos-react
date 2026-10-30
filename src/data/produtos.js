@@ -1,4 +1,3 @@
-// Carrinho fixo: os valores em centavos evitam imprecisão nos cálculos monetários.
 export const produtos = [{
   id: 'luz-01',
   nome: 'Pendente Aurora',
