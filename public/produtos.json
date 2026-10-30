@@ -1,14 +1,124 @@
-{"produtos":[
-{"id":"pendente-aurora","nome":"Pendente Aurora","categoria":"Pendentes","descricao":"Cúpula geométrica em acabamento branco para uma luz acolhedora.","preco":289.9,"estoque":8,"imagem":"/images/pendente.jpg","alt":"Pendente branco com placas geométricas iluminadas"},
-{"id":"pendente-lua","nome":"Pendente Lua","categoria":"Pendentes","descricao":"Luz suave e difusa para compor salas e quartos.","preco":329.9,"estoque":5,"imagem":"/images/pendente.jpg","alt":"Pendente de luz suave para ambientes internos"},
-{"id":"pendente-ninho","nome":"Pendente Ninho","categoria":"Pendentes","descricao":"Trama leve que cria sombras delicadas no ambiente.","preco":419.9,"estoque":4,"imagem":"/images/pendente.jpg","alt":"Pendente com trama decorativa"},
-{"id":"pendente-lume","nome":"Pendente Lume","categoria":"Pendentes","descricao":"Design essencial para iluminar mesas de jantar.","preco":249.9,"estoque":10,"imagem":"/images/pendente.jpg","alt":"Pendente minimalista sobre mesa de jantar"},
-{"id":"mesa-ambar","nome":"Luminária de mesa Âmbar","categoria":"Luminárias de mesa","descricao":"Design essencial e luz aconchegante para seu canto de leitura.","preco":179.9,"estoque":12,"imagem":"/images/mesa.jpg","alt":"Luminária de mesa para iluminação de apoio"},
-{"id":"mesa-brisa","nome":"Luminária Brisa","categoria":"Luminárias de mesa","descricao":"Base compacta e cúpula de tecido para noites tranquilas.","preco":219.9,"estoque":7,"imagem":"/images/mesa.jpg","alt":"Luminária de mesa compacta"},
-{"id":"mesa-cora","nome":"Luminária Cora","categoria":"Luminárias de mesa","descricao":"Um ponto de luz elegante para aparadores e criados.","preco":259.9,"estoque":6,"imagem":"/images/mesa.jpg","alt":"Luminária decorativa sobre aparador"},
-{"id":"mesa-nova","nome":"Luminária Nova","categoria":"Luminárias de mesa","descricao":"Acabamento fosco e presença delicada para o home office.","preco":199.9,"estoque":9,"imagem":"/images/mesa.jpg","alt":"Luminária para home office"},
-{"id":"piso-serena","nome":"Luminária de piso Serena","categoria":"Luminárias de piso","descricao":"Perfil minimalista e acabamento verde para iluminar cantos.","preco":459.9,"estoque":3,"imagem":"/images/piso.png","alt":"Luminária de piso verde com cúpula direcionável"},
-{"id":"piso-oliva","nome":"Luminária Oliva","categoria":"Luminárias de piso","descricao":"Haste fina e luz direcionável para a sala de estar.","preco":529.9,"estoque":4,"imagem":"/images/piso.png","alt":"Luminária de piso com haste fina"},
-{"id":"piso-arco","nome":"Luminária Arco","categoria":"Luminárias de piso","descricao":"Alcance amplo para transformar o ambiente com conforto.","preco":689.9,"estoque":2,"imagem":"/images/piso.png","alt":"Luminária de piso em formato arco"},
-{"id":"piso-linha","nome":"Luminária Linha","categoria":"Luminárias de piso","descricao":"Silhueta vertical e luz quente para momentos de pausa.","preco":399.9,"estoque":5,"imagem":"/images/piso.png","alt":"Luminária de piso vertical"}
-]}
+﻿{
+    "produtos":  [
+                     {
+                         "id":  "pendente-aurora",
+                         "nome":  "Pendente Aurora",
+                         "categoria":  "Pendentes",
+                         "descricao":  "Cúpula geométrica em acabamento branco para uma luz acolhedora.",
+                         "preco":  289.9,
+                         "estoque":  8,
+                         "imagem":  "/images/pendente-aurora.webp",
+                         "alt":  "Pendente branco com placas geométricas iluminadas"
+                     },
+                     {
+                         "id":  "pendente-lua",
+                         "nome":  "Pendente Lua",
+                         "categoria":  "Pendentes",
+                         "descricao":  "Luz suave e difusa para compor salas e quartos.",
+                         "preco":  329.9,
+                         "estoque":  5,
+                         "imagem":  "/images/pendente-lua.webp",
+                         "alt":  "Pendente de luz suave para ambientes internos"
+                     },
+                     {
+                         "id":  "pendente-ninho",
+                         "nome":  "Pendente Ninho",
+                         "categoria":  "Pendentes",
+                         "descricao":  "Trama leve que cria sombras delicadas no ambiente.",
+                         "preco":  419.9,
+                         "estoque":  4,
+                         "imagem":  "/images/pendente-ninho.webp",
+                         "alt":  "Pendente com trama decorativa"
+                     },
+                     {
+                         "id":  "pendente-lume",
+                         "nome":  "Pendente Lume",
+                         "categoria":  "Pendentes",
+                         "descricao":  "Design essencial para iluminar mesas de jantar.",
+                         "preco":  249.9,
+                         "estoque":  10,
+                         "imagem":  "/images/pendente-lume.webp",
+                         "alt":  "Pendente minimalista sobre mesa de jantar"
+                     },
+                     {
+                         "id":  "mesa-ambar",
+                         "nome":  "Luminária de mesa Âmbar",
+                         "categoria":  "Luminárias de mesa",
+                         "descricao":  "Design essencial e luz aconchegante para seu canto de leitura.",
+                         "preco":  179.9,
+                         "estoque":  12,
+                         "imagem":  "/images/mesa-ambar.webp",
+                         "alt":  "Luminária de mesa para iluminação de apoio"
+                     },
+                     {
+                         "id":  "mesa-brisa",
+                         "nome":  "Luminária Brisa",
+                         "categoria":  "Luminárias de mesa",
+                         "descricao":  "Base compacta e cúpula de tecido para noites tranquilas.",
+                         "preco":  219.9,
+                         "estoque":  7,
+                         "imagem":  "/images/mesa-brisa.webp",
+                         "alt":  "Luminária de mesa compacta"
+                     },
+                     {
+                         "id":  "mesa-cora",
+                         "nome":  "Luminária Cora",
+                         "categoria":  "Luminárias de mesa",
+                         "descricao":  "Um ponto de luz elegante para aparadores e criados.",
+                         "preco":  259.9,
+                         "estoque":  6,
+                         "imagem":  "/images/mesa-cora.webp",
+                         "alt":  "Luminária decorativa sobre aparador"
+                     },
+                     {
+                         "id":  "mesa-nova",
+                         "nome":  "Luminária Nova",
+                         "categoria":  "Luminárias de mesa",
+                         "descricao":  "Acabamento fosco e presença delicada para o home office.",
+                         "preco":  199.9,
+                         "estoque":  9,
+                         "imagem":  "/images/mesa-nova.webp",
+                         "alt":  "Luminária para home office"
+                     },
+                     {
+                         "id":  "piso-serena",
+                         "nome":  "Luminária de piso Serena",
+                         "categoria":  "Luminárias de piso",
+                         "descricao":  "Perfil minimalista e acabamento verde para iluminar cantos.",
+                         "preco":  459.9,
+                         "estoque":  3,
+                         "imagem":  "/images/piso-serena.webp",
+                         "alt":  "Luminária de piso verde com cúpula direcionável"
+                     },
+                     {
+                         "id":  "piso-oliva",
+                         "nome":  "Luminária Oliva",
+                         "categoria":  "Luminárias de piso",
+                         "descricao":  "Haste fina e luz direcionável para a sala de estar.",
+                         "preco":  529.9,
+                         "estoque":  4,
+                         "imagem":  "/images/piso-oliva.webp",
+                         "alt":  "Luminária de piso com haste fina"
+                     },
+                     {
+                         "id":  "piso-arco",
+                         "nome":  "Luminária Arco",
+                         "categoria":  "Luminárias de piso",
+                         "descricao":  "Alcance amplo para transformar o ambiente com conforto.",
+                         "preco":  689.9,
+                         "estoque":  2,
+                         "imagem":  "/images/piso-arco.webp",
+                         "alt":  "Luminária de piso em formato arco"
+                     },
+                     {
+                         "id":  "piso-linha",
+                         "nome":  "Luminária Linha",
+                         "categoria":  "Luminárias de piso",
+                         "descricao":  "Silhueta vertical e luz quente para momentos de pausa.",
+                         "preco":  399.9,
+                         "estoque":  5,
+                         "imagem":  "/images/piso-linha.webp",
+                         "alt":  "Luminária de piso vertical"
+                     }
+                 ]
+}
