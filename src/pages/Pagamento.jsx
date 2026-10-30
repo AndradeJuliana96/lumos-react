@@ -1,58 +1,85 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 
-import { pagamentoSchema } from '../utils/pagamento.js';
-import { totalCompra, formatarMoeda } from '../utils/moeda.js';
-import usePagamento from '../hooks/usePagamento.js';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import Campo from '../components/Campo.jsx';
-import Etapas from '../components/Etapas.jsx';
-import Icone from '../components/Icone.jsx';
-import ResumoCompra from '../components/ResumoCompra.jsx';
+import { pagamentoSchema } from "../utils/pagamento.js";
+import { totalCompra, formatarMoeda } from "../utils/moeda.js";
+import { criarPedido, salvarPedido } from "../utils/pedidos.js";
+import { useCarrinho } from "../context/CarrinhoContext.jsx";
+import usePagamento from "../hooks/usePagamento.js";
 
-export default function Pagamento({ produtos }) {
+import Campo from "../components/Campo.jsx";
+import Etapas from "../components/Etapas.jsx";
+import Icone from "../components/Icone.jsx";
+import ResumoCompra from "../components/ResumoCompra.jsx";
+
+export default function Pagamento() {
   const navigate = useNavigate();
-
+  const { itens, limparCarrinho } = useCarrinho();
   const { processando, processar } = usePagamento();
 
-  const [erroGeral, setErroGeral] = useState('');
+  const [erroGeral, setErroGeral] = useState("");
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(pagamentoSchema),
     defaultValues: {
-      titular: '',
-      numero: '',
-      validade: '',
-      cvv: ''
+      titular: "",
+      numero: "",
+      validade: "",
+      cvv: "",
     },
-    mode: 'onTouched'
+    mode: "onTouched",
   });
 
   const ocupado = processando || isSubmitting;
 
   async function enviar(dados) {
-    setErroGeral('');
+    setErroGeral("");
 
     try {
       const resultado = await processar(dados.numero);
 
       if (!resultado) return;
 
-      reset();
+      if (resultado === "sucesso") {
+        // Registra a compra aprovada antes de limpar o carrinho.
+        const pedido = criarPedido({
+          itens,
+          valor: totalCompra(itens),
+        });
 
-      navigate(`/${resultado}`, {
-        replace: true
-      });
+        salvarPedido(pedido);
+
+        reset();
+
+        // Preserva o redirecionamento que já corrigimos.
+        navigate("/sucesso", {
+          replace: true,
+          flushSync: true,
+          state: {
+            pedidoId: pedido.id,
+          },
+        });
+
+        limparCarrinho();
+      } else {
+        reset();
+
+        // Pagamentos recusados não geram pedidos.
+        navigate("/falha", {
+          replace: true,
+        });
+      }
     } catch {
       setErroGeral(
-        'Não foi possível concluir a simulação. Tente novamente.'
+        "Não foi possível concluir a simulação. Tente novamente."
       );
     }
   }
@@ -62,7 +89,7 @@ export default function Pagamento({ produtos }) {
       <Etapas atual={1} />
 
       <div className="titulo-pagina">
-        <Link className="voltar" to="/">
+        <Link className="voltar" to="/carrinho">
           ← Voltar ao carrinho
         </Link>
 
@@ -84,8 +111,8 @@ export default function Pagamento({ produtos }) {
           </div>
 
           <div className="aviso">
-            Use somente dados fictícios. Esta compra não gera cobrança nem
-            envio de produtos.
+            Use somente dados fictícios. Esta compra não gera
+            cobrança nem envio de produtos.
           </div>
 
           <form
@@ -103,7 +130,7 @@ export default function Pagamento({ produtos }) {
               <Campo
                 label="Nome do titular"
                 nome="titular"
-                registro={register('titular')}
+                registro={register("titular")}
                 erro={errors.titular}
                 placeholder="Como aparece no cartão"
                 autoComplete="off"
@@ -112,39 +139,40 @@ export default function Pagamento({ produtos }) {
               <Campo
                 label="Número do cartão"
                 nome="numero"
-                registro={register('numero', {
+                registro={register("numero", {
                   onChange: (event) => {
                     const numeros = event.target.value
-                      .replace(/\D/g, '')
+                      .replace(/\D/g, "")
                       .slice(0, 16);
 
                     event.target.value = numeros
-                      .replace(/(\d{4})(?=\d)/g, '$1 ');
-                  }
+                      .replace(/(\d{4})(?=\d)/g, "$1 ")
+                      .trim();
+                  },
                 })}
                 erro={errors.numero}
                 placeholder="1234 5678 9012 3456"
                 inputMode="numeric"
                 maxLength={19}
                 autoComplete="off"
-                ajuda="16 dígitos. Espaços e hífens são aceitos."
+                ajuda="16 dígitos. O campo é formatado automaticamente."
               />
 
               <div className="campos-duplos">
                 <Campo
                   label="Validade"
                   nome="validade"
-                  registro={register('validade', {
+                  registro={register("validade", {
                     onChange: (event) => {
                       const numeros = event.target.value
-                        .replace(/\D/g, '')
+                        .replace(/\D/g, "")
                         .slice(0, 4);
 
                       event.target.value =
                         numeros.length > 2
                           ? `${numeros.slice(0, 2)}/${numeros.slice(2)}`
                           : numeros;
-                    }
+                    },
                   })}
                   erro={errors.validade}
                   placeholder="MM/AA"
@@ -155,7 +183,7 @@ export default function Pagamento({ produtos }) {
                 <Campo
                   label="Código de segurança"
                   nome="cvv"
-                  registro={register('cvv')}
+                  registro={register("cvv")}
                   erro={errors.cvv}
                   placeholder="CVV"
                   type="password"
@@ -173,13 +201,13 @@ export default function Pagamento({ produtos }) {
             )}
 
             <p className="privacidade">
-              <Icone nome="cadeado" tamanho={17} /> Os dados do cartão não são
-              armazenados.
+              <Icone nome="cadeado" tamanho={17} />
+              Os dados do cartão não são armazenados.
             </p>
           </form>
         </section>
 
-        <ResumoCompra produtos={produtos}>
+        <ResumoCompra produtos={itens}>
           <button
             className="botao"
             form="form-pagamento"
@@ -193,18 +221,14 @@ export default function Pagamento({ produtos }) {
               </>
             ) : (
               <>
-                Pagar {formatarMoeda(totalCompra(produtos))}
+                Pagar {formatarMoeda(totalCompra(itens))}
                 <Icone nome="seta" />
               </>
             )}
           </button>
 
-          <p
-            className="sr-only"
-            role="status"
-            aria-live="polite"
-          >
-            {ocupado ? 'Processando compra…' : ''}
+          <p className="sr-only" role="status" aria-live="polite">
+            {ocupado ? "Processando compra…" : ""}
           </p>
         </ResumoCompra>
       </div>
