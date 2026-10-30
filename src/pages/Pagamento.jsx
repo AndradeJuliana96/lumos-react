@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -5,20 +6,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { pagamentoSchema } from "../utils/pagamento.js";
 import { totalCompra, formatarMoeda } from "../utils/moeda.js";
+import { useCarrinho } from "../context/CarrinhoContext.jsx";
 import usePagamento from "../hooks/usePagamento.js";
 
 import Campo from "../components/Campo.jsx";
 import Etapas from "../components/Etapas.jsx";
 import Icone from "../components/Icone.jsx";
 import ResumoCompra from "../components/ResumoCompra.jsx";
-import { useCarrinho } from "../context/CarrinhoContext.jsx";
 
 export default function Pagamento() {
   const navigate = useNavigate();
   const { itens, limparCarrinho } = useCarrinho();
-
-  const produtos = itens;
-
   const { processando, processar } = usePagamento();
 
   const [erroGeral, setErroGeral] = useState("");
@@ -52,14 +50,21 @@ export default function Pagamento() {
       reset();
 
       if (resultado === "sucesso") {
-        limparCarrinho();
-      }
+        navigate("/sucesso", {
+          replace: true,
+          flushSync: true,
+        });
 
-      navigate(`/${resultado}`, {
-        replace: true,
-      });
+        limparCarrinho();
+      } else {
+        navigate("/falha", {
+          replace: true,
+        });
+      }
     } catch {
-      setErroGeral("Não foi possível concluir a simulação. Tente novamente.");
+      setErroGeral(
+        "Não foi possível concluir a simulação. Tente novamente."
+      );
     }
   }
 
@@ -68,7 +73,7 @@ export default function Pagamento() {
       <Etapas atual={1} />
 
       <div className="titulo-pagina">
-        <Link className="voltar" to="/">
+        <Link className="voltar" to="/carrinho">
           ← Voltar ao carrinho
         </Link>
 
@@ -90,8 +95,8 @@ export default function Pagamento() {
           </div>
 
           <div className="aviso">
-            Use somente dados fictícios. Esta compra não gera cobrança nem envio
-            de produtos.
+            Use somente dados fictícios. Esta compra não gera
+            cobrança nem envio de produtos.
           </div>
 
           <form
@@ -180,13 +185,13 @@ export default function Pagamento() {
             )}
 
             <p className="privacidade">
-              <Icone nome="cadeado" tamanho={17} /> Os dados do cartão não são
-              armazenados.
+              <Icone nome="cadeado" tamanho={17} />
+              Os dados do cartão não são armazenados.
             </p>
           </form>
         </section>
 
-        <ResumoCompra produtos={produtos}>
+        <ResumoCompra produtos={itens}>
           <button
             className="botao"
             form="form-pagamento"
@@ -200,7 +205,7 @@ export default function Pagamento() {
               </>
             ) : (
               <>
-                Pagar {formatarMoeda(totalCompra(produtos))}
+                Pagar {formatarMoeda(totalCompra(itens))}
                 <Icone nome="seta" />
               </>
             )}
