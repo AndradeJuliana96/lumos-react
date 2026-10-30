@@ -1254,3 +1254,52 @@ body { overflow-x: hidden; }
     padding: 52px 0;
   }
 }
+
+/* Página Sobre — Lumos */
+
+.pagina-institucional {
+  max-width: 850px;
+  padding: 30px 0;
+}
+
+.pagina-institucional h1 {
+  margin: 12px 0 18px;
+}
+
+.institucional-lead {
+  color: var(--texto);
+  font-size: 1.1rem;
+  max-width: 650px;
+}
+
+.institucional-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 42px 0;
+}
+
+.institucional-grid article {
+  padding: 26px;
+  background: #edf3e8;
+  border: 1px solid var(--linha);
+}
+
+.institucional-grid h2 {
+  margin-bottom: 12px;
+}
+
+.institucional-grid p {
+  color: var(--texto);
+}
+
+.institucional-botao {
+  max-width: 240px;
+}
+
+@media (max-width: 780px) {
+  .institucional-grid {
+    grid-template-columns: 1fr;
+    margin: 30px 0;
+  }
+}

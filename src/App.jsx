@@ -1,14 +1,8 @@
-
 import { useEffect, useRef } from "react";
-import {
-  Link,
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import Home from "./pages/Home.jsx";
+import Sobre from "./pages/Sobre.jsx";
 import Carrinho from "./pages/Carrinho.jsx";
 import Catalogo from "./pages/Catalogo.jsx";
 import DetalheProduto from "./pages/DetalheProduto.jsx";
@@ -39,6 +33,7 @@ export default function App() {
   useEffect(() => {
     const titulos = {
       "/": "Início",
+      "/sobre": "Sobre a Lumos",
       "/produtos": "Produtos",
       "/carrinho": "Seu carrinho",
       "/pagamento": "Pagamento",
@@ -48,9 +43,7 @@ export default function App() {
 
     document.title = `Lumos | ${
       titulos[pathname] ||
-      (pathname.startsWith("/produtos/")
-        ? "Detalhes do produto"
-        : "Página")
+      (pathname.startsWith("/produtos/") ? "Detalhes do produto" : "Página")
     }`;
 
     mainRef.current?.focus();
@@ -64,16 +57,11 @@ export default function App() {
       </a>
 
       <div className="faixa">
-        Luz, forma e aconchego.{" "}
-        <span>Encontre o seu equilíbrio.</span>
+        Luz, forma e aconchego. <span>Encontre o seu equilíbrio.</span>
       </div>
 
       <header className="cabecalho">
-        <Link
-          className="marca"
-          to="/"
-          aria-label="Lumos — voltar ao início"
-        >
+        <Link className="marca" to="/" aria-label="Lumos — voltar ao início">
           <img
             src="/images/logo.png"
             alt="Lumos Luminárias & Iluminação"
@@ -82,13 +70,12 @@ export default function App() {
           />
         </Link>
 
-        <div className="cabecalho-descricao">
-          LUMINÁRIAS & ILUMINAÇÃO
-        </div>
+        <div className="cabecalho-descricao">LUMINÁRIAS & ILUMINAÇÃO</div>
 
         <nav className="navegacao" aria-label="Navegação principal">
           <Link to="/">Início</Link>
           <Link to="/produtos">Produtos</Link>
+          <Link to="/sobre">Sobre</Link>
         </nav>
 
         <Link
@@ -108,33 +95,23 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
 
+          <Route path="/sobre" element={<Sobre />} />
+
           <Route path="/produtos" element={<Catalogo />} />
 
-          <Route
-            path="/produtos/:id"
-            element={<DetalheProduto />}
-          />
+          <Route path="/produtos/:id" element={<DetalheProduto />} />
 
           <Route path="/carrinho" element={<Carrinho />} />
 
-          <Route
-            path="/pagamento"
-            element={<PagamentoProtegido />}
-          />
+          <Route path="/pagamento" element={<PagamentoProtegido />} />
 
           <Route path="/sucesso" element={<Sucesso />} />
 
           <Route path="/falha" element={<Falha />} />
 
-          <Route
-            path="/resultado/:status"
-            element={<Resultado />}
-          />
+          <Route path="/resultado/:status" element={<Resultado />} />
 
-          <Route
-            path="*"
-            element={<Navigate to="/" replace />}
-          />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
 
